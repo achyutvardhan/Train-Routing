@@ -1,0 +1,38 @@
+.graph {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  size: 100px;
+  overflow: visible;
+}
+.graph-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw; /* Adjust width as needed */
+  height: 100vh; /* Adjust height as needed */
+  overflow: visible;
+}
+.node {
+  display: inline-block;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background-color: #eee;
+  margin: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer; /* Add cursor for hover effect */
+}
+
+.node.selected {
+  background-color: #99ccff; /* Change color for selected node */
+}
+
+.edge {
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+  cursor: pointer; /* Add cursor for hover effect */
+}
