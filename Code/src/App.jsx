@@ -3,7 +3,7 @@ import Graph from './pages/Graph'
 function App() {
 
   return (
-    <>
+    < >
      <Graph/>
     </>
   )

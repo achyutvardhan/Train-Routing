@@ -1,59 +1,49 @@
 import React, { useState } from "react";
 import "../css/Graph.css"; // Assuming Graph.css styles the circles
-
+import edges from "../edges";
+import nodes from "../nodes";
+import Dropdown from "../components/Dropdown";
+import Sidepanel from "../components/Sidepanel";
+import SourceDest from "../components/SourceDest";
 export default function Graph() {
-  const nodes = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
-  const edges = [
-    { from: 'A', to: 'B' },
-    { from: 'B', to: 'C' },
-    { from: 'C', to: 'D' },
-    { from: 'D', to: 'E' },
-    { from: 'E', to: 'G' },
-    { from: 'G', to: 'H' },
-    { from: 'E', to: 'F' },
-    { from: 'H', to: 'F' },
-    { from: 'F', to: 'J' },
-    { from: 'H', to: 'I' },
-    { from: 'J', to: 'K' },
-    { from: 'K', to: 'L' },
-    { from: 'B', to: 'L' },
-    { from: 'L', to: 'M' },
-    { from: 'M', to: 'N' },
-    // Add all connections for two-way edges
-    { from: 'B', to: 'A' },
-    { from: 'C', to: 'B' },
-    { from: 'D', to: 'C' },
-    { from: 'G', to: 'E' },
-    { from: 'H', to: 'G' },
-    { from: 'F', to: 'E' },
-    { from: 'F', to: 'H' },
-    { from: 'J', to: 'F' },
-    { from: 'I', to: 'H' },
-    { from: 'K', to: 'J' },
-    { from: 'L', to: 'K' },
-    { from: 'L', to: 'B' },
-    { from: 'M', to: 'L' },
-    { from: 'N', to: 'M' },
-  ];
   const [selectedNode, setSelectedNode] = useState(null); // Track selected node
-
+  const [isOpen, setIsOpen] = useState({
+    A: false,
+    B: false,
+    C: false,
+    D: false,
+    E: false,
+    F: false,
+    G: false,
+    H: false,
+    I: false,
+    J: false,
+    K: false,
+    L: false,
+    M: false,
+    N: false,
+  });
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const handleNodeClick = (node) => {
     setSelectedNode(node);
-    // Add your logic for handling node selection (e.g., display node information)
+    console.log(node);
+    setIsOpen({ ...isOpen, [node]: !isOpen[node] });
+    console.log(isOpen[node]);
   };
 
+  const handleOpen = (val) => {
+    setIsOpen(val);
+  };
   const handleEdgeClick = (edge) => {
     // Add your logic for handling edge selection (e.g., highlight connected nodes)
     console.log(`Edge clicked: ${edge.from} to ${edge.to}`);
   };
 
   const getNodePosition = (node) => {
-    // Implement logic to calculate node positions based on your layout (circular, hierarchical, etc.)
-    // This is a simplified example assuming a circular layout with a fixed radius
     const radius = 200;
     const angle = (nodes.indexOf(node) / nodes.length) * 2 * Math.PI;
     return {
-      x: Math.cos(angle) * radius + 150, // Adjust center coordinates as needed
+      x: Math.cos(angle) * radius + 250,
       y: Math.sin(angle) * radius + 150,
     };
   };
@@ -64,23 +54,19 @@ export default function Graph() {
         <svg className="graph" viewBox="0 0 600 500">
           {/* Render nodes */}
           {nodes.map((node) => (
-            <circle
-              key={node}
-              className={`node ${selectedNode === node ? "selected" : ""}`} // Add selected class
-              cx={getNodePosition(node).x}
-              cy={getNodePosition(node).y}
-              r="30"
-              onClick={() => handleNodeClick(node)}
-            >
-              {/* Display node text */}
-              <text
-                dominantBaseline="middle"
-                textAnchor="middle"
-                fontSize="20" // Adjust font size as needed
+            <>
+              <circle
+                key={node}
+                className={`node ${selectedNode === node ? "selected" : ""}`} // Add selected class
+                cx={getNodePosition(node).x}
+                cy={getNodePosition(node).y}
+                r="30"
+                color="white"
+                onClick={() => handleNodeClick(node)}
               >
                 {node}
-              </text>
-            </circle>
+              </circle>
+            </>
           ))}
 
           {/* Render edges */}
@@ -96,6 +82,12 @@ export default function Graph() {
             />
           ))}
         </svg>
+         <button onClick={()=>{setIsSidePanelOpen(!isSidePanelOpen)}}>
+          {isSidePanelOpen ? "Close Side Panel" : "Open Side Panel"}
+        </button>
+        <Sidepanel isOpen={isSidePanelOpen} className={isSidePanelOpen ? "open" : ""} /> 
+
+        <SourceDest/>
       </div>
     </>
   );

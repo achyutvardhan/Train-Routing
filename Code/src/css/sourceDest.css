@@ -1,0 +1,12 @@
+.pathFinder {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+select[name="source"],
+select[name="destination"] {
+  margin-right: 10px;
+}

@@ -1,0 +1,25 @@
+.externalPanel {
+  position: fixed; /* Make the side panel fixed on the screen */
+  top: 0; /* Position it at the top */
+  left: 0; /* Position it on the left */
+  height: 100vh; /* Make it full viewport height */
+  width: 300px; /* Adjust width as needed */
+  background-color: #f0f0f0; /* Set background color */
+  display: flex; /* Allow vertical stacking of internal elements */
+  flex-direction: column; /* Stack elements vertically */
+  transition: transform 0.3s ease-in-out; /* Add animation for smooth opening/closing */
+}
+
+.externalPanel.open {
+  /* Styles for open state (optional) */
+  transform: translateX(0); /* Slide in from the left */
+}
+
+.internalPanel {
+  flex: 1; /* Take up remaining space within the external panel */
+  padding: 1rem; /* Add padding */
+}
+
+.box-type {
+  /* Styles for the box-type element within the internal panel */
+}
