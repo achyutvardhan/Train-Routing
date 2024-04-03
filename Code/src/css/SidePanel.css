@@ -4,9 +4,10 @@
   left: 0; /* Position it on the left */
   height: 100vh; /* Make it full viewport height */
   width: 300px; /* Adjust width as needed */
-  background-color: #f0f0f0; /* Set background color */
+  background-color: #e7c3c3; /* Set background color */
   display: flex; /* Allow vertical stacking of internal elements */
   flex-direction: column; /* Stack elements vertically */
+  z-index: 2;
   transition: transform 0.3s ease-in-out; /* Add animation for smooth opening/closing */
 }
 
@@ -17,9 +18,18 @@
 
 .internalPanel {
   flex: 1; /* Take up remaining space within the external panel */
-  padding: 1rem; /* Add padding */
+  padding: 1rem;
+  overflow-y: scroll; /* Add padding */
 }
 
 .box-type {
   /* Styles for the box-type element within the internal panel */
+  display: flex;
+  flex-direction: column;
+}
+
+.DropBox {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
 }

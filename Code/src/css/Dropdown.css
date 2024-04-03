@@ -1,0 +1,17 @@
+.dropdown {
+    position: relative; /* Needed for optional hover effects */
+    display: inline-block; /* Allow inline placement */
+  }
+  
+  .dropdown select {
+    border: 1px solid #ccc; /* Basic border */
+    padding: 0.5rem 1rem; /* Add some padding */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Adjust font size as needed */
+    cursor: pointer; /* Indicate interactivity */
+  }
+  
+  .dropdown select:focus {
+    outline: none; /* Remove default outline on focus */
+    border-color: #999; /* Change border color on focus (optional) */
+  }

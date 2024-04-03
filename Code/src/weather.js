@@ -1,5 +1,9 @@
 export default [
   {
+    name: "Clean",
+    fact: 1,
+  },
+  {
     name: "Stormy",
     fact: 2,
   },
@@ -18,9 +22,5 @@ export default [
   {
     name: "Heavy fog",
     fact: 5,
-  },
-  {
-    name: "Clean",
-    fact: 1,
   },
 ];

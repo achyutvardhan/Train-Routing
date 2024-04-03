@@ -1,23 +1,30 @@
 import React from "react";
 import { useState } from "react";
 import weather from "../weather";
-export default function Dropdown({ handleOpen }) {
-  const [selectedValue, setSelectedValue] = useState(String(weather[5].fact));
-  console.log(weather[5].fact);
-  const handleChange = (event) => {
+import "../css/Dropdown.css";
+export default function Dropdown() {
+  const [selectedValue, setSelectedValue] = useState();
+
+  const handleChangeWeather = (event) => {
     setSelectedValue(event.target.value);
   };
-  const handleApply = () => {
-    // send factor to backend
-    handleOpen(false);
-  };
+
   return (
     <>
-      <select>
-        <option value="someOption">Some option</option>
-        <option value="otherOption">Other option</option>
-      </select>
-      <button onClick={handleApply}>Apply</button>
+      <div className="dropdown">
+        <select
+          value={selectedValue}
+          name="weather"
+          onChange={handleChangeWeather}
+        >
+          <option value="">Select...</option>
+          {weather.map((data, key) => (
+            <option value={data.fact} key={key}>
+              {data.name}
+            </option>
+          ))}
+        </select>
+      </div>
     </>
   );
 }
