@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import "../css/SidePanel.css";
 import nodes from "../nodes";
 export default function Sidepanel({ isOpen }) {
+  const [node, setnode] = useState(nodes);
+  console.log(node);
   return (
     <>
       {isOpen && (
@@ -10,7 +12,7 @@ export default function Sidepanel({ isOpen }) {
           <div className="internalPanel">
             <h3>Select Weather Type : </h3>
             <div className="box-type">
-              {nodes.map((data, key) => {
+              {node.map((data, key) => {
                 return (
                   <div className="DropBox">
                     <strong style={{ marginBottom: "5px" }}>{data}</strong>
@@ -19,6 +21,10 @@ export default function Sidepanel({ isOpen }) {
                 );
               })}
             </div>
+
+            <button type="submit" className="apply">
+              Apply Changes
+            </button>
           </div>
         </div>
       )}
