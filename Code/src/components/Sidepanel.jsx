@@ -4,7 +4,7 @@ import "../css/SidePanel.css";
 import nodes from "../nodes";
 export default function Sidepanel({ isOpen }) {
   const [node, setnode] = useState(nodes);
-  console.log(node);
+  //   console.log(node);
   return (
     <>
       {isOpen && (

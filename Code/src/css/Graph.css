@@ -18,6 +18,7 @@
 }
 .node {
   display: inline-block;
+  position: relative;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 50%;
@@ -25,17 +26,25 @@
   margin: 0.5rem;
   font-weight: bold;
   text-align: center;
-  cursor: pointer; /* Add cursor for hover effect */
+  cursor: pointer;
+  fill: #99ccff; /* Add cursor for hover effect */
 }
 
 .node.selected {
-  fill: #99ccff; /* Change color for selected node */
+  fill: #8ce4e4; /* Change color for selected node */
   color: white;
 }
 
 .edge {
-  stroke: black;
+  stroke: rgb(123, 235, 155);
   stroke-width: 2px;
   fill: none;
   cursor: pointer; /* Add cursor for hover effect */
+}
+
+.select {
+  stroke: rgb(220, 9, 9);
+  stroke-width: 2px;
+  fill: none;
+  cursor: pointer;
 }

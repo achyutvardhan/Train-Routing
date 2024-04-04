@@ -15,18 +15,5 @@ export default [
     { from: 'L', to: 'M' },
     { from: 'M', to: 'N' },
     // Add all connections for two-way edges
-    { from: 'B', to: 'A' },
-    { from: 'C', to: 'B' },
-    { from: 'D', to: 'C' },
-    { from: 'G', to: 'E' },
-    { from: 'H', to: 'G' },
-    { from: 'F', to: 'E' },
-    { from: 'F', to: 'H' },
-    { from: 'J', to: 'F' },
-    { from: 'I', to: 'H' },
-    { from: 'K', to: 'J' },
-    { from: 'L', to: 'K' },
-    { from: 'L', to: 'B' },
-    { from: 'M', to: 'L' },
-    { from: 'N', to: 'M' },
+  
 ]

@@ -7,6 +7,7 @@ import Sidepanel from "../components/Sidepanel";
 import SourceDest from "../components/SourceDest";
 export default function Graph() {
   const [selectedNode, setSelectedNode] = useState(null); // Track selected node
+  const [selectedEdges, setSelectedEdges] = useState(null); // Track selected node
   const [isOpen, setIsOpen] = useState({
     A: false,
     B: false,
@@ -23,6 +24,23 @@ export default function Graph() {
     M: false,
     N: false,
   });
+  const [wreckage, setWreckage] = useState([
+    { from: "A", to: "B", cond: "true" },
+    { from: "B", to: "C", cond: "true" },
+    { from: "C", to: "D", cond: "true" },
+    { from: "D", to: "E", cond: "true" },
+    { from: "E", to: "G", cond: "true" },
+    { from: "G", to: "H", cond: "true" },
+    { from: "E", to: "F", cond: "true" },
+    { from: "H", to: "F", cond: "true" },
+    { from: "F", to: "J", cond: "true" },
+    { from: "H", to: "I", cond: "true" },
+    { from: "J", to: "K", cond: "true" },
+    { from: "K", to: "L", cond: "true" },
+    { from: "B", to: "L", cond: "true" },
+    { from: "L", to: "M", cond: "true" },
+    { from: "M", to: "N", cond: "true" },
+  ]);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const handleNodeClick = (node) => {
     setSelectedNode(node);
@@ -30,18 +48,32 @@ export default function Graph() {
     setIsOpen({ ...isOpen, [node]: !isOpen[node] });
     console.log(isOpen[node]);
   };
-
-  const handleOpen = (val) => {
-    setIsOpen(val);
-  };
   const handleEdgeClick = (edge) => {
-    // Add your logic for handling edge selection (e.g., highlight connected nodes)
+    setSelectedEdges({ from: edge.from, to: edge.to });
+    const updatedWreckage = [...wreckage];
+    updatedWreckage.forEach((wreckageItem) => {
+      if (wreckageItem.from === edge.from && wreckageItem.to === edge.to) {
+        wreckageItem.cond = !wreckageItem.cond;
+      }
+    });
+    setWreckage(updatedWreckage);
+    // console.table(wreckage);
+
     console.log(`Edge clicked: ${edge.from} to ${edge.to}`);
   };
 
   const getNodePosition = (node) => {
     const radius = 200;
-    const angle = (nodes.indexOf(node) / nodes.length) * 2 * Math.PI;
+    const angle = (nodes.indexOf(node) / nodes.length) * 10 * Math.PI;
+    return {
+      x: Math.cos(angle) * radius + 250,
+      y: Math.sin(angle) * radius + 150,
+    };
+  };
+
+  const getNodePositionEdges = (node) => {
+    const radius = 170;
+    const angle = (nodes.indexOf(node) / nodes.length) * 10 * Math.PI;
     return {
       x: Math.cos(angle) * radius + 250,
       y: Math.sin(angle) * radius + 150,
@@ -58,14 +90,22 @@ export default function Graph() {
               <circle
                 key={node}
                 className={`node ${selectedNode === node ? "selected" : ""}`} // Add selected class
+                // className="node selected"
                 cx={getNodePosition(node).x}
                 cy={getNodePosition(node).y}
                 r="30"
                 color="white"
                 onClick={() => handleNodeClick(node)}
+              />
+              <text
+                x={getNodePosition(node).x}
+                y={getNodePosition(node).y}
+                textAnchor="middle"
+                alignmentBaseline="middle"
+                fill="black"
               >
                 {node}
-              </circle>
+              </text>
             </>
           ))}
 
@@ -73,21 +113,34 @@ export default function Graph() {
           {edges.map((edge) => (
             <line
               key={`${edge.from}-${edge.to}`}
-              x1={getNodePosition(edge.from).x}
-              y1={getNodePosition(edge.from).y}
-              x2={getNodePosition(edge.to).x}
-              y2={getNodePosition(edge.to).y}
-              className="edge"
+              x1={getNodePositionEdges(edge.from).x}
+              y1={getNodePositionEdges(edge.from).y}
+              x2={getNodePositionEdges(edge.to).x}
+              y2={getNodePositionEdges(edge.to).y}
+              // className={`${selectedEdges&&(selectedEdges.from==edge.from&&selectedEdges.to==edge.to)?"select":"edge"}`}
+              className={`${
+                wreckage.find((w) => w.from === edge.from && w.to === edge.to)
+                  .cond == true
+                  ? "select"
+                  : "edge"
+              }`}
               onClick={() => handleEdgeClick(edge)}
             />
           ))}
         </svg>
-         <button onClick={()=>{setIsSidePanelOpen(!isSidePanelOpen)}}>
+        <button
+          onClick={() => {
+            setIsSidePanelOpen(!isSidePanelOpen);
+          }}
+        >
           {isSidePanelOpen ? "Close Side Panel" : "Open Side Panel"}
         </button>
-        <Sidepanel isOpen={isSidePanelOpen} className={isSidePanelOpen ? "open" : ""} /> 
+        <Sidepanel
+          isOpen={isSidePanelOpen}
+          className={isSidePanelOpen ? "open" : ""}
+        />
 
-        <SourceDest/>
+        <SourceDest />
       </div>
     </>
   );
