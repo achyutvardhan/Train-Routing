@@ -37,14 +37,14 @@
 
 .edge {
   stroke: rgb(123, 235, 155);
-  stroke-width: 2px;
+  stroke-width: 6px;
   fill: none;
   cursor: pointer; /* Add cursor for hover effect */
 }
 
 .select {
   stroke: rgb(220, 9, 9);
-  stroke-width: 2px;
+  stroke-width: 6px;
   fill: none;
   cursor: pointer;
 }
