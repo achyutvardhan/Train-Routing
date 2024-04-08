@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import "../css/SidePanel.css";
-import nodes from "../nodes";
+import nodes from "../js/nodes";
 export default function Sidepanel({ isOpen }) {
   const [node, setnode] = useState(nodes);
   //   console.log(node);

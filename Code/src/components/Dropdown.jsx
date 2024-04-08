@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import weather from "../weather";
+import weather from "../js/weather";
 import "../css/Dropdown.css";
 export default function Dropdown() {
   const [selectedValue, setSelectedValue] = useState();

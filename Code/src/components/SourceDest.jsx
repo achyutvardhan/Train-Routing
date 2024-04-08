@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import nodes from "../nodes";
+import nodes from "../js/nodes";
 import "../css/sourceDest.css";
-import edges from "../edges";
-export default function SourceDest({selectedEdges, setSelectedEdges}) {
+import edges from "../js/edges";
+// import shortest from '../js/Algo.js'
+export default function SourceDest({ handleNodeClick }) {
   const [source, setSource] = useState(nodes[0]);
   const [destination, setDestination] = useState(nodes[nodes.length - 1]);
-  const alphaVal = (s) => s.toLowerCase().charCodeAt(0) - 97
-  const numAlpha = (s) => String.fromCharCode(s+65)
+  const alphaVal = (s) => s.toLowerCase().charCodeAt(0) - 97;
+  const numAlpha = (s) => String.fromCharCode(s + 65);
   const handleChangeSource = (event) => {
     setSource(event.target.value);
     // Optionally perform actions based on the selected value
@@ -17,34 +18,35 @@ export default function SourceDest({selectedEdges, setSelectedEdges}) {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    var edges_list = edges.map((ele)=>{
+    var edges_list = edges.map((ele) => {
       const e = Object.assign({}, ele);
-      e.distance = parseInt(e.distance)
-      e.to = alphaVal(e.to)
-      e.from = alphaVal(e.from)
-      return e
-    })
-    algo(edges_list,nodes.length,edges.length,alphaVal(source))
+      e.distance = parseInt(e.distance);
+      e.to = alphaVal(e.to);
+      e.from = alphaVal(e.from);
+      return e;
+    });
+    const temp = algo(edges_list, nodes.length, edges.length, alphaVal(source));
+    handleNodeClick(temp )
   };
 
   const algo = (graph, V, E, src) => {
     let dis = Array(V).fill(Infinity);
 
     dis[src] = 0;
-    var predecessor = []
+    var predecessor = [];
     for (let i = 0; i < V - 1; i++) {
       for (let j = 0; j < E; j++) {
         if (dis[graph[j].from] + graph[j].distance < dis[graph[j].to]) {
           dis[graph[j].to] = dis[graph[j].from] + graph[j].distance;
-          predecessor[graph[j].to] = graph[j].from
+          predecessor[graph[j].to] = graph[j].from;
         }
       }
     }
-    var current = alphaVal(destination)
-    var path = [] //empty list
-    while (current != undefined){
-      path.unshift(current)
-      current = predecessor[current]
+    var current = alphaVal(destination);
+    var path = []; //empty list
+    while (current != undefined) {
+      path.unshift(current);
+      current = predecessor[current];
     }
 
     for (let i = 0; i < E; i++) {
@@ -58,10 +60,15 @@ export default function SourceDest({selectedEdges, setSelectedEdges}) {
       }
     }
     var temp = {};
-    for(let i = 1; i < path.length;i++){
-      temp = {...temp,[numAlpha(path[i-1])]:{to:numAlpha(path[i]),count:i}}
+    for (let i = 1; i < path.length; i++) {
+      temp = {
+        ...temp,
+        [numAlpha(path[i - 1])]: { to: numAlpha(path[i]), count: i },
+      };
     }
-    setSelectedEdges(temp)
+    // console.log(temp)
+    // handleNodeClick(temp,dest)
+    return temp;
   };
   return (
     <>
