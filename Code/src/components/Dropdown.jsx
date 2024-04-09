@@ -2,11 +2,12 @@ import React from "react";
 import { useState } from "react";
 import weather from "../js/weather";
 import "../css/Dropdown.css";
-export default function Dropdown() {
+export default function Dropdown({onhandleChange , node}) {
   const [selectedValue, setSelectedValue] = useState();
 
   const handleChangeWeather = (event) => {
-    setSelectedValue(event.target.value);
+    event.preventDefault();
+    onhandleChange({val : event.target.value , node : node });
   };
 
   return (

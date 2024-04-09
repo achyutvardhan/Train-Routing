@@ -14,7 +14,7 @@ var edges_list = edges.map((ele)=>{
   return e
 })
 var result = floydWarshall(edges_list,nodes)
-export default function SourceDest({handleNodeClick , wreckage}) {
+export default function SourceDest({handleNodeClick , wreckage , weatherReport}) {
   console.log(wreckage)
   const [source, setSource] = useState(nodes[0]);
   const [destination, setDestination] = useState(nodes[nodes.length - 1]);

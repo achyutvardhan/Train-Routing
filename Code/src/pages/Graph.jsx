@@ -4,12 +4,15 @@ import edges from "../js/edges";
 import nodes from "../js/nodes";
 import Sidepanel from "../components/Sidepanel";
 import SourceDest from "../components/SourceDest";
+import weather from "../js/weather";
 export default function Graph() {
   const [selectedNode, setSelectedNode] = useState(null); // Track selected node
   const [selectedEdges, setSelectedEdges] = useState(null); // Track selected node
   const [RoutedEdges, setRoutedEdges] = useState(null); // Track Routed node
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [wreckage, setWreckage] = useState(null);
+  const [Weathers , setWeathers] = useState(null);
+
   const handleNodeClick = (node) => {
     const routedEdges = [];
     setSelectedNode(node);
@@ -36,7 +39,6 @@ export default function Graph() {
 
     console.log(`Edge clicked: ${edge.from} to ${edge.to}`);
   };
-  console.table(wreckage);
 
   const getNodePosition = (node) => {
     const radius = 200;
@@ -55,6 +57,11 @@ export default function Graph() {
       y: Math.sin(angle) * radius + 150,
     };
   };
+  
+  const getSetWeathers = (val )=>{
+    console.log(val)
+     setWeathers(val);
+  }
 
   return (
     <>
@@ -148,10 +155,11 @@ export default function Graph() {
           </button>
           <Sidepanel
             isOpen={isSidePanelOpen}
+            getSetWeathers={getSetWeathers}
             className={isSidePanelOpen ? "open" : ""}
           />
 
-          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage}/>
+          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage} weatherReport={weather}/>
         </div>
       </div>
     </>
