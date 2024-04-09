@@ -5,28 +5,11 @@ import nodes from "../js/nodes";
 import Sidepanel from "../components/Sidepanel";
 import SourceDest from "../components/SourceDest";
 export default function Graph() {
-  let count = 0;
   const [selectedNode, setSelectedNode] = useState(null); // Track selected node
   const [selectedEdges, setSelectedEdges] = useState(null); // Track selected node
   const [RoutedEdges, setRoutedEdges] = useState(null); // Track Routed node
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
-  const [wreckage, setWreckage] = useState([
-    { from: "A", to: "B", cond: true },
-    { from: "B", to: "C", cond: true },
-    { from: "C", to: "D", cond: true },
-    { from: "D", to: "E", cond: true },
-    { from: "E", to: "G", cond: true },
-    { from: "G", to: "H", cond: true },
-    { from: "E", to: "F", cond: true },
-    { from: "H", to: "F", cond: true },
-    { from: "F", to: "J", cond: true },
-    { from: "H", to: "I", cond: true },
-    { from: "J", to: "K", cond: true },
-    { from: "K", to: "L", cond: true },
-    { from: "B", to: "L", cond: true },
-    { from: "L", to: "M", cond: true },
-    { from: "M", to: "N", cond: true },
-  ]);
+  const [wreckage, setWreckage] = useState(null);
   const handleNodeClick = (node) => {
     const routedEdges = [];
     setSelectedNode(node);
@@ -40,19 +23,20 @@ export default function Graph() {
   const handleEdgeClick = (edge) => {
     setSelectedEdges({
       ...selectedEdges,
-      [edge.from]: { to: edge.to, count: "" },
+      [edge.from]: { to: edge.to },
     });
-    const updatedWreckage = [...wreckage];
-    updatedWreckage.forEach((wreckageItem) => {
-      if (wreckageItem.from === edge.from && wreckageItem.to === edge.to) {
-        wreckageItem.cond = !wreckageItem.cond;
-      }
-    });
+    const updatedWreckage = wreckage ? [...wreckage] : [];
+    let index = updatedWreckage.findIndex(
+      (w) => w.from == edge.from && w.to == edge.to
+    );
+    console.log(index);
+    if (index != -1) updatedWreckage.splice(index, 1);
+    else updatedWreckage.push({ from: edge.from, to: edge.to });
     setWreckage(updatedWreckage);
-    // console.table(wreckage);
 
     console.log(`Edge clicked: ${edge.from} to ${edge.to}`);
   };
+  console.table(wreckage);
 
   const getNodePosition = (node) => {
     const radius = 200;
@@ -114,11 +98,11 @@ export default function Graph() {
                     x2={getNodePositionEdges(edge.to).x}
                     y2={getNodePositionEdges(edge.to).y}
                     className={`${
-                      wreckage.find(
+                      wreckage?.find(
                         (w) => w.from === edge.from && w.to === edge.to
-                      )?.cond === true
-                        ? "edge"
-                        : "select"
+                      )
+                        ? "select"
+                        : "edge"
                     }`}
                     onClick={() => handleEdgeClick(edge)}
                   />
@@ -140,6 +124,14 @@ export default function Graph() {
                     }`}
                     onClick={() => handleEdgeClick(edge)}
                   />
+                  {/* <text
+                    key={`${edge.from}-${edge.to}`}
+                    x1={getNodePositionEdges(edge.from).x}
+                    y1={getNodePositionEdges(edge.from).y}
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                    fill="black"
+                  >1</text> */}
                 </>
               )}
             </>
@@ -159,7 +151,7 @@ export default function Graph() {
             className={isSidePanelOpen ? "open" : ""}
           />
 
-          <SourceDest handleNodeClick={handleNodeClick} />
+          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage}/>
         </div>
       </div>
     </>
