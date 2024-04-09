@@ -2,7 +2,7 @@ import { useState } from "react";
 import nodes from "../js/nodes";
 import "../css/sourceDest.css";
 import edges from "../js/edges";
-import {floydWarshall, shortestpath} from "../algo/floydWarshall";
+import {floydWarshall, shortestpath} from "../js/floydWarshall";
 
 const alphaVal = (s) => s.toLowerCase().charCodeAt(0) - 97
 const numAlpha = (s) => String.fromCharCode(s+65)
