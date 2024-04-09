@@ -14,7 +14,7 @@ var edges_list = edges.map((ele)=>{
   return e
 })
 var result = floydWarshall(edges_list,nodes)
-export default function SourceDest({selectedEdges, setSelectedEdges}) {
+export default function SourceDest({handleNodeClick}) {
   const [source, setSource] = useState(nodes[0]);
   const [destination, setDestination] = useState(nodes[nodes.length - 1]);
   const handleChangeSource = (event) => {
@@ -30,7 +30,10 @@ export default function SourceDest({selectedEdges, setSelectedEdges}) {
     var matrix = result[0]
     var shortpath = shortestpath(result[1],alphaVal(source),alphaVal(destination))
     console.log(matrix)
-    console.log(shortpath?.map((e)=>numAlpha(e)))
+    // console.log(shortpath?.map((e)=>numAlpha(e)))
+    var finalOutput = shortpath?.map((e)=>numAlpha(e));
+    // console.log(finalOutput)
+    handleNodeClick(finalOutput);
   };
 
   return (

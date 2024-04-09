@@ -30,7 +30,7 @@
   fill: #99ccff; /* Add cursor for hover effect */
 }
 
-.node.selected {
+.selected {
   fill: #8ce4e4; /* Change color for selected node */
   color: white;
 }

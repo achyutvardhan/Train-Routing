@@ -2,30 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../css/Graph.css"; // Assuming Graph.css styles the circles
 import edges from "../js/edges";
 import nodes from "../js/nodes";
-import Dropdown from "../components/Dropdown";
 import Sidepanel from "../components/Sidepanel";
 import SourceDest from "../components/SourceDest";
 export default function Graph() {
   let count = 0;
   const [selectedNode, setSelectedNode] = useState(null); // Track selected node
-  // const [selectedEdges, setSelectedEdges] = useState(null); // Track selected node
-  let selectedEdges = [];
-  const [isOpen, setIsOpen] = useState({
-    A: false,
-    B: false,
-    C: false,
-    D: false,
-    E: false,
-    F: false,
-    G: false,
-    H: false,
-    I: false,
-    J: false,
-    K: false,
-    L: false,
-    M: false,
-    N: false,
-  });
+  const [selectedEdges, setSelectedEdges] = useState(null); // Track selected node
+  const [RoutedEdges, setRoutedEdges] = useState(null); // Track Routed node
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [wreckage, setWreckage] = useState([
     { from: "A", to: "B", cond: true },
     { from: "B", to: "C", cond: true },
@@ -43,24 +27,16 @@ export default function Graph() {
     { from: "L", to: "M", cond: true },
     { from: "M", to: "N", cond: true },
   ]);
-  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const handleNodeClick = (node) => {
-    selectedEdges = [];
-    let lastNode = null
-    for (let ch = "A".charCodeAt(0); ch <= "N".charCodeAt(0); ch++) {
-      const char = String.fromCharCode(ch);
-      if (node[char]) {
-        selectedEdges.push(char);
-        lastNode = node[char].to
-        // console.log(lastNode)
-      }
+    const routedEdges = [];
+    setSelectedNode(node);
+    console.log(node);
+    for (let i = 1; i < node.length; i++) {
+      routedEdges.push({ from: node[i - 1], to: node[i] });
     }
-    selectedEdges.push(lastNode)
-    console.log(selectedEdges);
-    // console.log(node);
-    // setIsOpen({ ...isOpen, [node]: !isOpen[node] });
-    // console.log(isOpen[node]);
+    setRoutedEdges(routedEdges);
   };
+  // console.log(RoutedEdges);
   const handleEdgeClick = (edge) => {
     setSelectedEdges({
       ...selectedEdges,
@@ -105,14 +81,15 @@ export default function Graph() {
             <>
               <circle
                 key={node}
-                className={`node ${selectedNode === node ? "selected" : ""}`} // Add selected class
-                // className="node selected"
+                className={` ${
+                  selectedNode?.find((w) => w == node) ? "selected" : "node"
+                }`} // Add selected class
                 cx={getNodePosition(node).x}
                 cy={getNodePosition(node).y}
                 r="30"
                 color="white"
-                // onClick={() => handleNodeClick(node)}
               />
+
               <text
                 x={getNodePosition(node).x}
                 y={getNodePosition(node).y}
@@ -125,63 +102,65 @@ export default function Graph() {
             </>
           ))}
 
-          {/* Render edges */}
+          {/* Render edges with updated wreckage*/}
           {edges.map((edge, idx) => (
             <>
-              <line
-                key={`${edge.from}-${edge.to}`}
-                x1={getNodePositionEdges(edge.from).x}
-                y1={getNodePositionEdges(edge.from).y}
-                x2={getNodePositionEdges(edge.to).x}
-                y2={getNodePositionEdges(edge.to).y}
-                // className={`${
-                //   selectedEdges?.[edge.from]?.to == edge.to ? "select" : ""
-                // }`}
-                // className={`${(selectedEdges?.from==edge.from&&selectedEdges?.to==edge.to)?"select":"edge"}`}
-                className={`${
-                  wreckage.find((w) => w.from === edge.from && w.to === edge.to)
-                    ?.cond === true
-                    ? "edge"
-                    : "select"
-                }`}
-                onClick={() => handleEdgeClick(edge)}
-              />
-              {/* {selectedEdges?.[edge.from]?.to == edge.to && (
+              {!RoutedEdges ? (
                 <>
-                  <text
-                    x={
-                      (getNodePositionEdges(edge.from).x +
-                        getNodePositionEdges(edge.to).x) /
-                      2
-                    }
-                    y={
-                      (getNodePositionEdges(edge.from).y +
-                        getNodePositionEdges(edge.to).y) /
-                      2
-                    }
-                    fontSize="30"
-                  >
-                    {selectedEdges?.[edge.from]?.count}
-                  </text>
-                  <text x={getNodePositionEdges(edge.to).x-10} y={getNodePositionEdges(edge.from).y-10} fontSize="20">{count++}</text>
+                  <line
+                    key={`${edge.from}-${edge.to}`}
+                    x1={getNodePositionEdges(edge.from).x}
+                    y1={getNodePositionEdges(edge.from).y}
+                    x2={getNodePositionEdges(edge.to).x}
+                    y2={getNodePositionEdges(edge.to).y}
+                    className={`${
+                      wreckage.find(
+                        (w) => w.from === edge.from && w.to === edge.to
+                      )?.cond === true
+                        ? "edge"
+                        : "select"
+                    }`}
+                    onClick={() => handleEdgeClick(edge)}
+                  />
                 </>
-              )} */}
+              ) : (
+                <>
+                  <line
+                    key={`${edge.from}-${edge.to}`}
+                    x1={getNodePositionEdges(edge.from).x}
+                    y1={getNodePositionEdges(edge.from).y}
+                    x2={getNodePositionEdges(edge.to).x}
+                    y2={getNodePositionEdges(edge.to).y}
+                    className={`${
+                      RoutedEdges.find(
+                        (w) => w.from === edge.from && w.to === edge.to
+                      )
+                        ? "edge"
+                        : ""
+                    }`}
+                    onClick={() => handleEdgeClick(edge)}
+                  />
+                </>
+              )}
             </>
           ))}
         </svg>
-        <button
-          onClick={() => {
-            setIsSidePanelOpen(!isSidePanelOpen);
-          }}
-        >
-          {isSidePanelOpen ? "Close Side Panel" : "Open Side Panel"}
-        </button>
-        <Sidepanel
-          isOpen={isSidePanelOpen}
-          className={isSidePanelOpen ? "open" : ""}
-        />
 
-        <SourceDest handleNodeClick={handleNodeClick} />
+        <div>
+          <button
+            onClick={() => {
+              setIsSidePanelOpen(!isSidePanelOpen);
+            }}
+          >
+            {isSidePanelOpen ? "Close Side Panel" : "Open Side Panel"}
+          </button>
+          <Sidepanel
+            isOpen={isSidePanelOpen}
+            className={isSidePanelOpen ? "open" : ""}
+          />
+
+          <SourceDest handleNodeClick={handleNodeClick} />
+        </div>
       </div>
     </>
   );
