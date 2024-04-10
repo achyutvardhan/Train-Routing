@@ -1,6 +1,7 @@
 export default [
   { from: "A", to: "B", cond: true, distance: 2 },
   { from: "B", to: "C", cond: true, distance: 3 },
+  { from: "A", to: "C", cond: true, distance: 10 },
   { from: "C", to: "D", cond: true, distance: 4 },
   { from: "D", to: "E", cond: true, distance: 5 },
   { from: "E", to: "G", cond: true, distance: 2 },
