@@ -1,4 +1,4 @@
-export function floydWarshall(graph, V) {
+export function floydWarshall(graph, V, weather) {
   const nV = V.length;
   const matrix = Array(nV).fill([]);
   for (let i = 0; i < nV; i++) {
@@ -10,11 +10,22 @@ export function floydWarshall(graph, V) {
     next[i] = Array(nV).fill(Infinity);
   }
 
-  graph.forEach((e) => {
+  const nextPriority = Array(nV).fill([]);
+  for (let i = 0; i < nV; i++) {
+    nextPriority[i] = Array(nV).fill(Infinity);
+  }
+
+  const priority = Array(nV).fill(1);
+
+  graph?.forEach((e) => {
     matrix[e.from][e.to] = e.distance;
     next[e.from][e.to] = e.to;
   });
 
+  weather?.forEach((e) => {
+    priority[e.node] = e.val;
+  });
+  console.log(priority);
   for (let k = 0; k < nV; k++) {
     for (let i = 0; i < nV; i++) {
       for (let j = 0; j < nV; j++) {
@@ -22,10 +33,12 @@ export function floydWarshall(graph, V) {
         if (matrix[i][j] > matrix[i][k] + matrix[k][j]) {
           matrix[i][j] = matrix[i][k] + matrix[k][j];
           next[i][j] = next[i][k];
+          nextPriority[i][j] = priority[j];
         }
       }
     }
   }
+  console.log(nextPriority);
   return [matrix, next];
 }
 

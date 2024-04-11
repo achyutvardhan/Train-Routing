@@ -158,7 +158,7 @@ export default function Graph() {
             className={isSidePanelOpen ? "open" : ""}
           />
 
-          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage} weatherReport={weather}/>
+          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage} weatherReport={Weathers}/>
         </div>
       </div>
     </>
