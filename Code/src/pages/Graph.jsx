@@ -22,7 +22,6 @@ export default function Graph() {
     }
     setRoutedEdges(routedEdges);
   };
-  // console.log(RoutedEdges);
   const handleEdgeClick = (edge) => {
     setSelectedEdges({
       ...selectedEdges,
