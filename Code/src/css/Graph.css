@@ -1,19 +1,17 @@
 .graph {
   position: absolute;
   top: 70%;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%, -50%);
   size: 100px;
   overflow: visible;
-  z-index: 1;
 }
 .graph-container {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   justify-content: center;
   align-items: center;
-  width: 100%; /* Adjust width as needed */
-  height: 100px; /* Adjust height as needed */
+  width: 70%; /* Adjust width as needed */
+  height: 90vh; /* Adjust height as needed */
   overflow: visible;
 }
 .node {
@@ -47,4 +45,39 @@
   stroke-width: 6px;
   fill: none;
   cursor: pointer;
+}
+
+.externalCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* Style for the container */
+.second-contanier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 95vh;
+  justify-content: center;
+  margin-right: 20px;
+  /* border: 1px solid red; */
+  background-color:rgb(125, 218, 231);
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: all .5s  ease-in-out;
+}
+
+.second-contanier:hover{
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+/* Style for the button */
+.second-contanier > button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue color, you can change it */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }

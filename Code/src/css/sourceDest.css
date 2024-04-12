@@ -10,3 +10,40 @@ select[name="source"],
 select[name="destination"] {
   margin-right: 10px;
 }
+
+/* Style for the form container */
+.pathFinder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style for the form labels */
+.pathFinder label {
+  margin-bottom: 5px;
+}
+
+/* Style for the select inputs */
+.pathFinder select {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Style for the submit button */
+.pathFinder button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue color, you can change it */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for the submit button on hover */
+.pathFinder button:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}

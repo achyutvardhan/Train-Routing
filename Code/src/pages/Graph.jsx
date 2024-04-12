@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../css/Graph.css"; // Assuming Graph.css styles the circles
 import edges from "../js/edges";
 import nodes from "../js/nodes";
@@ -11,7 +11,7 @@ export default function Graph() {
   const [RoutedEdges, setRoutedEdges] = useState(null); // Track Routed node
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [wreckage, setWreckage] = useState(null);
-  const [Weathers , setWeathers] = useState(null);
+  const [Weathers, setWeathers] = useState(null);
 
   const handleNodeClick = (node) => {
     const routedEdges = [];
@@ -56,14 +56,16 @@ export default function Graph() {
       y: Math.sin(angle) * radius + 150,
     };
   };
-  
-  const getSetWeathers = (val )=>{
-    console.log(val)
-     setWeathers(val);
-  }
+
+  const getSetWeathers = (val) => {
+    console.log(val);
+    setWeathers(val);
+  };
 
   return (
     <>
+    <div className="externalCont">
+
       <div className="graph-container">
         <svg className="graph" viewBox="0 0 600 500">
           {/* Render nodes */}
@@ -144,7 +146,8 @@ export default function Graph() {
           ))}
         </svg>
 
-        <div>
+      </div>
+        <div className="second-contanier">
           <button
             onClick={() => {
               setIsSidePanelOpen(!isSidePanelOpen);
@@ -158,9 +161,13 @@ export default function Graph() {
             className={isSidePanelOpen ? "open" : ""}
           />
 
-          <SourceDest handleNodeClick={handleNodeClick} wreckage={wreckage} weatherReport={Weathers}/>
+          <SourceDest
+            handleNodeClick={handleNodeClick}
+            wreckage={wreckage}
+            weatherReport={Weathers}
+          />
         </div>
-      </div>
+    </div>
     </>
   );
 }
